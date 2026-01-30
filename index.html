@@ -10,6 +10,7 @@
     <style>
       body {
         font-family: 'Inter', sans-serif;
+        background-color: #f8fafc;
       }
       .gradient-bg {
         background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
@@ -19,12 +20,20 @@
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.1);
       }
-      .map-path {
-        transition: fill 0.3s ease;
-        cursor: pointer;
+      /* Prevenção de CLS (Cumulative Layout Shift) para o mapa */
+      .map-container svg {
+        width: 100%;
+        height: auto;
       }
-      .map-path:hover {
-        fill: #10b981;
+      input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 18px;
+        width: 18px;
+        border-radius: 50%;
+        background: #10b981;
+        cursor: pointer;
+        box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+        margin-top: -6px;
       }
     </style>
     <script type="importmap">
@@ -34,8 +43,8 @@
     "react-dom": "https://esm.sh/react-dom@19.0.0",
     "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
     "react/jsx-runtime": "https://esm.sh/react@19.0.0/jsx-runtime",
-    "lucide-react": "https://esm.sh/lucide-react@0.463.0?deps=react@19.0.0",
-    "recharts": "https://esm.sh/recharts@2.13.3?deps=react@19.0.0,react-dom@19.0.0",
+    "lucide-react": "https://esm.sh/lucide-react@0.463.0?external=react",
+    "recharts": "https://esm.sh/recharts@2.13.3?external=react,react-dom",
     "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
     "react/": "https://esm.sh/react@^19.2.4/"
   }
