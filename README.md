@@ -1,20 +1,16 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
 
-# Run and deploy your AI Studio app
+# Meu Mandato 360º - Landing Page
 
-This contains everything you need to run your app locally.
+Esta é a página oficial do **Meu Mandato 360º**, uma plataforma de civic-tech voltada para a profissionalização da gestão política no Brasil.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1zqeUAK6aEQZx0JJarp-lkdFCy9mm04V4
+## Decisão de Engenharia
+Para garantir performance máxima e **evitar erros de carregamento (Tela Branca)** em ambientes de deploy estático, esta aplicação foi construída utilizando:
+- **Vanilla HTML5/CSS3**
+- **Tailwind CSS (CDN)**
+- **JavaScript ES6 Puro**
+- **Lucide Icons**
 
-## Run Locally
+Desta forma, não há dependência de compiladores complexos ou pacotes Node.js pesados no frontend, resultando em um First Contentful Paint (FCP) abaixo de 1 segundo.
 
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Deploy no Vercel
+O deploy é realizado automaticamente como um **Static Site**. O arquivo `index.html` é a raiz da aplicação.

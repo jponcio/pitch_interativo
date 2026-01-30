@@ -1,50 +1,294 @@
 
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Meu Mandato 360º | Gestão Política Inteligente</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Mandato 360º | Gestão Política de Alta Performance</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-      body {
-        font-family: 'Inter', sans-serif;
-        scroll-behavior: smooth;
-      }
-      .gradient-bg {
-        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      }
-      .glass-card {
-        background: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-      .module-card {
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-      .module-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-      }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
+        .gradient-bg { background: linear-gradient(135deg, #064e3b 0%, #065f46 100%); }
+        .card-shadow { transition: all 0.3s ease; border: 1px solid rgba(226, 232, 240, 0.8); }
+        .card-shadow:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); border-color: #10b981; }
+        .modal { transition: opacity 0.25s ease; }
+        .modal-active { overflow: hidden; }
+        .bg-grid { background-image: radial-gradient(#e2e8f0 1px, transparent 1px); background-size: 30px 30px; }
     </style>
-    <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@19.0.0",
-    "react-dom": "https://esm.sh/react-dom@19.0.0",
-    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
-    "react/jsx-runtime": "https://esm.sh/react@19.0.0/jsx-runtime",
-    "lucide-react": "https://esm.sh/lucide-react@0.463.0?external=react",
-    "recharts": "https://esm.sh/recharts@2.13.3?external=react,react-dom",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/"
-  }
-}
-</script>
-  </head>
-  <body class="bg-slate-50">
-    <div id="root"></div>
+</head>
+<body class="bg-slate-50 text-slate-900 overflow-x-hidden">
+
+    <!-- Header -->
+    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="bg-emerald-600 p-2 rounded-lg">
+                    <i data-lucide="target" class="text-white w-6 h-6"></i>
+                </div>
+                <span class="text-xl font-extrabold tracking-tight">Meu Mandato <span class="text-emerald-600">360º</span></span>
+            </div>
+            <div class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-600">
+                <a href="#problema" class="hover:text-emerald-600 transition-colors">O Problema</a>
+                <a href="#solucao" class="hover:text-emerald-600 transition-colors">A Solução</a>
+                <a href="#modulos" class="hover:text-emerald-600 transition-colors">Módulos</a>
+                <a href="#publico" class="hover:text-emerald-600 transition-colors">Para Quem?</a>
+            </div>
+            <a href="#contato" class="bg-slate-900 text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-emerald-600 transition-all shadow-lg shadow-slate-200">
+                Falar com Especialista
+            </a>
+        </div>
+    </nav>
+
+    <!-- 1. HERO SECTION -->
+    <section class="pt-40 pb-24 md:pt-56 md:pb-32 gradient-bg relative overflow-hidden text-white">
+        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10 text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-emerald-300 text-xs font-bold uppercase tracking-widest mb-8">
+                <i data-lucide="shield-check" class="w-4 h-4"></i> Inteligência Geopolítica & Gestão
+            </div>
+            <h1 class="text-4xl md:text-7xl font-extrabold mb-8 leading-[1.1] max-w-5xl mx-auto">
+                Governar não é improviso. <br/>
+                <span class="text-emerald-400">É método, dados e estratégia.</span>
+            </h1>
+            <p class="text-lg md:text-xl text-emerald-50/80 mb-12 max-w-3xl mx-auto leading-relaxed">
+                O Meu Mandato 360º organiza dados, base política, projetos e entregas em um único sistema — antes, durante e depois do mandato.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#contato" class="bg-emerald-500 text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-emerald-400 transition-all shadow-xl shadow-emerald-900/40 flex items-center justify-center gap-3">
+                    Quero organizar meu mandato <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. THE PROBLEM -->
+    <section id="problema" class="py-24 bg-white bg-grid">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-emerald-600 font-bold uppercase tracking-widest text-sm mb-4">O Diagnóstico</h2>
+                    <h3 class="text-3xl md:text-5xl font-extrabold text-slate-900 mb-8 leading-tight">
+                        Por que bons políticos perdem o controle da própria história?
+                    </h3>
+                    <div class="space-y-8">
+                        <div class="flex gap-4 p-6 rounded-2xl bg-slate-50 border border-slate-100">
+                            <i data-lucide="alert-circle" class="text-red-500 w-8 h-8 shrink-0"></i>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-lg">Mandatos sem dados</h4>
+                                <p class="text-slate-600 text-sm">Decisões tomadas no "feeling" resultam em desperdício de verba e perda de capital político.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 p-6 rounded-2xl bg-slate-50 border border-slate-100">
+                            <i data-lucide="users" class="text-red-500 w-8 h-8 shrink-0"></i>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-lg">Bases desorganizadas</h4>
+                                <p class="text-slate-600 text-sm">Depender da memória de assessores ou de planilhas de WhatsApp é o caminho para o esquecimento.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 p-6 rounded-2xl bg-slate-50 border border-slate-100">
+                            <i data-lucide="history" class="text-red-500 w-8 h-8 shrink-0"></i>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-lg">Falta de continuidade</h4>
+                                <p class="text-slate-600 text-sm">O hiato entre a campanha e o mandato destrói a confiança que o eleitor depositou em você.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="bg-slate-900 rounded-[2.5rem] p-4 shadow-2xl overflow-hidden border-8 border-slate-800">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" alt="Data visualization" class="rounded-2xl opacity-80">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-10 left-10 right-10 p-6 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20">
+                            <div class="text-emerald-400 font-bold text-xl mb-1">A Intuição custa caro.</div>
+                            <p class="text-slate-300 text-sm">82% dos parlamentares brasileiros não possuem um sistema centralizado de gestão de demandas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. THE SOLUTION -->
+    <section id="solucao" class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-emerald-600 font-bold uppercase tracking-widest text-sm mb-4">A Revolução</h2>
+            <h3 class="text-3xl md:text-5xl font-extrabold text-slate-900 mb-12">O Sistema Operacional do Mandato</h3>
+            <p class="text-lg text-slate-600 max-w-3xl mx-auto mb-20 leading-relaxed">
+                O Meu Mandato 360º não é apenas um software. É uma metodologia de **governança baseada em dados** que transforma o gabinete em uma central de inteligência e entregas.
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="p-8 rounded-3xl bg-white shadow-sm border border-slate-200">
+                    <div class="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                        <i data-lucide="bar-chart-3" class="text-emerald-600 w-8 h-8"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4">Gestão Baseada em Dados</h4>
+                    <p class="text-slate-500 text-sm">Saia do improviso. Tome decisões estratégicas com indicadores reais de impacto social e político.</p>
+                </div>
+                <div class="p-8 rounded-3xl bg-white shadow-sm border border-slate-200">
+                    <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                        <i data-lucide="map" class="text-blue-600 w-8 h-8"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4">Inteligência Territorial</h4>
+                    <p class="text-slate-500 text-sm">Visualize sua força política em mapas. Entenda onde estão seus apoiadores e onde o trabalho precisa ser intensificado.</p>
+                </div>
+                <div class="p-8 rounded-3xl bg-white shadow-sm border border-slate-200">
+                    <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                        <i data-lucide="rocket" class="text-purple-600 w-8 h-8"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4">Método de Reeleição</h4>
+                    <p class="text-slate-500 text-sm">A reeleição começa no primeiro dia de mandato. Nosso sistema garante que seu legado seja construído tijolo por tijolo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. CORE MODULES -->
+    <section id="modulos" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h3 class="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4">O Coração da Plataforma</h3>
+                <p class="text-slate-500">Módulos integrados para uma visão de 360 graus do seu trabalho político.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="p-8 bg-slate-50 rounded-3xl card-shadow cursor-pointer group" onclick="openModal('dashboard')">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="p-3 bg-white rounded-xl shadow-sm text-emerald-600">
+                            <i data-lucide="layout-dashboard" class="w-8 h-8"></i>
+                        </div>
+                        <i data-lucide="plus" class="text-slate-300 group-hover:text-emerald-500"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2">Dashboard Estratégico</h4>
+                    <p class="text-slate-600 text-sm">Visão consolidada de todas as métricas do mandato.</p>
+                </div>
+
+                <div class="p-8 bg-slate-50 rounded-3xl card-shadow cursor-pointer group" onclick="openModal('territory')">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="p-3 bg-white rounded-xl shadow-sm text-blue-600">
+                            <i data-lucide="map-pin" class="w-8 h-8"></i>
+                        </div>
+                        <i data-lucide="plus" class="text-slate-300 group-hover:text-blue-500"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2">Mapa Territorial</h4>
+                    <p class="text-slate-600 text-sm">Gestão geográfica de regiões, bases e lideranças.</p>
+                </div>
+
+                <div class="p-8 bg-slate-50 rounded-3xl card-shadow cursor-pointer group" onclick="openModal('projects')">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="p-3 bg-white rounded-xl shadow-sm text-purple-600">
+                            <i data-lucide="clipboard-list" class="w-8 h-8"></i>
+                        </div>
+                        <i data-lucide="plus" class="text-slate-300 group-hover:text-purple-500"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2">Rastreador de Projetos</h4>
+                    <p class="text-slate-600 text-sm">Acompanhamento em tempo real de leis e entregas.</p>
+                </div>
+
+                <div class="p-8 bg-slate-50 rounded-3xl card-shadow cursor-pointer group" onclick="openModal('crm')">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="p-3 bg-white rounded-xl shadow-sm text-amber-600">
+                            <i data-lucide="user-plus" class="w-8 h-8"></i>
+                        </div>
+                        <i data-lucide="plus" class="text-slate-300 group-hover:text-amber-500"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2">CRM da Base Política</h4>
+                    <p class="text-slate-600 text-sm">O histórico completo de cada apoiador e multiplicador.</p>
+                </div>
+
+                <div class="p-8 bg-slate-50 rounded-3xl card-shadow cursor-pointer group" onclick="openModal('kpis')">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="p-3 bg-white rounded-xl shadow-sm text-red-600">
+                            <i data-lucide="trending-up" class="w-8 h-8"></i>
+                        </div>
+                        <i data-lucide="plus" class="text-slate-300 group-hover:text-red-500"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2">Indicadores & KPIs</h4>
+                    <p class="text-slate-600 text-sm">Monitoramento de performance da assessoria e impacto.</p>
+                </div>
+
+                <div class="p-8 bg-slate-50 rounded-3xl card-shadow cursor-pointer group" onclick="openModal('pre')">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="p-3 bg-white rounded-xl shadow-sm text-slate-600">
+                            <i data-lucide="zap" class="w-8 h-8"></i>
+                        </div>
+                        <i data-lucide="plus" class="text-slate-300 group-hover:text-slate-900"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2">Pré-Campanha</h4>
+                    <p class="text-slate-600 text-sm">Organização estruturada para novos candidatos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. WHO IS IT FOR -->
+    <section id="publico" class="py-24 bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20">
+                <h3 class="text-3xl md:text-5xl font-extrabold mb-6">Construído para o Poder Público</h3>
+                <p class="text-slate-400 max-w-2xl mx-auto">Atendemos a todo o ecossistema político brasileiro com módulos específicos para cada necessidade.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="p-8 rounded-[2rem] bg-white/5 border border-white/10 text-center">
+                    <h4 class="text-xl font-bold mb-2">Vereadores</h4>
+                    <p class="text-sm text-slate-400">Foco em bairros, demandas locais e proximidade direta com o eleitor.</p>
+                </div>
+                <div class="p-8 rounded-[2rem] bg-emerald-600/20 border border-emerald-500/30 text-center">
+                    <h4 class="text-xl font-bold mb-2 text-emerald-400">Prefeitos e Vices</h4>
+                    <p class="text-sm text-slate-300">Gestão de entregas, monitoramento de obras e indicadores da cidade.</p>
+                </div>
+                <div class="p-8 rounded-[2rem] bg-white/5 border border-white/10 text-center">
+                    <h4 class="text-xl font-bold mb-2">Deputados</h4>
+                    <p class="text-sm text-slate-400">Gestão de múltiplas bases regionais e mapeamento de emendas.</p>
+                </div>
+                <div class="p-8 rounded-[2rem] bg-white/5 border border-white/10 text-center">
+                    <h4 class="text-xl font-bold mb-2">Aspirantes</h4>
+                    <p class="text-sm text-slate-400">Organização profissional para quem quer entrar na política com método.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. FINAL CTA -->
+    <section id="contato" class="py-24 bg-white relative">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <button onclick="openModal('especialista')" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-sm font-bold hover:bg-emerald-100 transition-all mb-8 shadow-sm">
+                <i data-lucide="message-circle" class="w-5 h-5 text-emerald-600"></i> Falar com um Especialista
+            </button>
+            <h2 class="text-4xl md:text-6xl font-black text-slate-900 mb-8 leading-tight">
+                Mandatos passam. <br/><span class="text-emerald-600">Dados e legado ficam.</span>
+            </h2>
+            <p class="text-xl text-slate-600 mb-12">Profissionalize sua gestão hoje e garanta o futuro da sua carreira política.</p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <input type="email" placeholder="Seu e-mail oficial" class="px-6 py-5 rounded-2xl bg-slate-100 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 flex-1 md:max-w-sm">
+                <button class="bg-emerald-600 text-white px-10 py-5 rounded-2xl font-bold hover:bg-emerald-500 transition-all shadow-xl shadow-emerald-600/20">
+                    Agendar Demonstração
+                </button>
+            </div>
+            <p class="mt-8 text-xs text-slate-400 italic">Conversas sigilosas e em conformidade com a LGPD.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-slate-950 border-t border-white/5 text-slate-600 text-center">
+        <p class="text-sm">© 2024 Meu Mandato 360º. Tecnologia para a Democracia.</p>
+    </footer>
+
+    <!-- MODAL SYSTEM -->
+    <div id="modalOverlay" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-6">
+        <div class="bg-white rounded-[2.5rem] max-w-2xl w-full p-10 relative">
+            <button onclick="closeModal()" class="absolute top-8 right-8 text-slate-400 hover:text-slate-900 transition-colors">
+                <i data-lucide="x" class="w-8 h-8"></i>
+            </button>
+            <div id="modalContent">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+    </div>
+
     <script type="module" src="./index.tsx"></script>
-  </body>
+</body>
 </html>
