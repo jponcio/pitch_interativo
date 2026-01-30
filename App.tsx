@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   ChevronDown, 
   Map as MapIcon, 
@@ -14,9 +14,9 @@ import {
   Rocket,
   Users
 } from 'lucide-react';
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
-import BrazilMap from './components/BrazilMap';
-import FinancialSimulator from './components/FinancialSimulator';
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Cell } from 'recharts';
+import BrazilMap from './components/BrazilMap.tsx';
+import FinancialSimulator from './components/FinancialSimulator.tsx';
 
 const App: React.FC = () => {
   const [activeFAQ, setActiveFAQ] = useState<number | null>(null);
@@ -95,7 +95,6 @@ const App: React.FC = () => {
               </div>
               <span className="font-bold text-xl tracking-tight text-slate-900">Meu Mandato <span className="text-emerald-600">360º</span></span>
             </div>
-            {/* Removed navigation links as requested */}
             <a 
               href="#contato"
               className="bg-slate-900 text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-slate-800 transition-all shadow-md shadow-slate-200"
@@ -161,7 +160,7 @@ const App: React.FC = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               { icon: <AlertCircle className="w-10 h-10 text-red-500" />, title: "Informação Dispersa", desc: "Planilhas, WhatsApp e papéis. Nada se conversa, nada é rastreável." },
-              { icon: <TrendingUp className="w-10 h-10 text-orange-500" />, title: "Decisão no Feeling", desc: "Ações baseadas em intuição, not em evidências reais do território." },
+              { icon: <TrendingUp className="w-10 h-10 text-orange-500" />, title: "Decisão no Feeling", desc: "Ações baseadas em intuição, não em evidências reais do território." },
               { icon: <Users className="w-10 h-10 text-blue-500" />, title: "Abismo com a Base", desc: "Dificuldade de manter o diálogo contínuo e mapear lideranças locais." },
               { icon: <BarChart3 className="w-10 h-10 text-purple-500" />, title: "Legado Invisível", desc: "Dificuldade de mostrar resultados tangíveis para a população ao final do ciclo." }
             ].map((item, idx) => (
@@ -274,7 +273,6 @@ const App: React.FC = () => {
                   <div>Camada: Densidade de Lideranças</div>
                 </div>
               </div>
-              {/* Overlay elements for impact */}
               <div className="absolute -bottom-6 -right-6 bg-emerald-600 text-white p-6 rounded-2xl shadow-xl max-w-[200px] hidden md:block animate-bounce">
                 <div className="text-2xl font-bold mb-1">+24%</div>
                 <div className="text-xs opacity-80">Engajamento orgânico mapeado na última quinzena</div>
