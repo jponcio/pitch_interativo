@@ -1,0 +1,7 @@
+{
+  "name": "Meu Mandato 360º - Pitch Deck Interativo",
+  "description": "Uma plataforma de gestão política baseada em dados, método e inteligência artificial para parlamentares e candidatos no Brasil.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
