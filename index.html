@@ -10,7 +10,7 @@
     <style>
       body {
         font-family: 'Inter', sans-serif;
-        background-color: #f8fafc;
+        scroll-behavior: smooth;
       }
       .gradient-bg {
         background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
@@ -20,20 +20,12 @@
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.1);
       }
-      /* Prevenção de CLS (Cumulative Layout Shift) para o mapa */
-      .map-container svg {
-        width: 100%;
-        height: auto;
+      .module-card {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       }
-      input[type=range]::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        height: 18px;
-        width: 18px;
-        border-radius: 50%;
-        background: #10b981;
-        cursor: pointer;
-        box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
-        margin-top: -6px;
+      .module-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
       }
     </style>
     <script type="importmap">
@@ -51,7 +43,7 @@
 }
 </script>
   </head>
-  <body>
+  <body class="bg-slate-50">
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
   </body>

@@ -1,329 +1,282 @@
 
 import React, { useState } from 'react';
 import { 
-  ChevronDown, 
-  Map as MapIcon, 
-  BarChart3, 
-  MessageSquare, 
-  Cpu, 
-  AlertCircle, 
-  Target, 
-  CheckCircle2, 
-  TrendingUp,
-  UserCheck,
-  Rocket,
-  Users,
-  ShieldCheck,
-  Coins,
-  Globe
+  Target, Rocket, AlertCircle, CheckCircle2, 
+  ChevronRight, BarChart3, Map as MapIcon, 
+  Users, Cpu, Globe, Coins, TrendingUp,
+  LayoutDashboard, FileText, UserPlus, HelpCircle
 } from 'lucide-react';
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Cell } from 'recharts';
 import BrazilMap from './components/BrazilMap.tsx';
 import FinancialSimulator from './components/FinancialSimulator.tsx';
 
 const App: React.FC = () => {
-  const [activeFAQ, setActiveFAQ] = useState<number | null>(null);
+  const [activeModule, setActiveModule] = useState<number | null>(null);
 
-  const billingModels = [
+  const modules = [
     {
-      role: "Vereadores",
-      setup: "R$ 3.000",
-      monthly: "R$ 199",
-      features: ["Base territorial", "Gestão de demandas", "Projetos legislativos", "App p/ assessores"],
-      icon: <Users className="w-6 h-6 text-emerald-500" />
+      id: 1,
+      title: "Dashboard Estratégico",
+      icon: <LayoutDashboard className="w-8 h-8 text-emerald-500" />,
+      description: "Visão 360º de todas as métricas do mandato em tempo real.",
+      details: "Acompanhe solicitações, emendas, performance da equipe e impacto de projetos em uma única tela."
     },
     {
-      role: "Prefeitos e Vices",
-      setup: "R$ 3.800",
-      monthly: "R$ 399",
-      features: ["Gestão de entregas", "Mapa de prioridades", "Indicadores (KPIs)", "Suporte especializado"],
-      icon: <Target className="w-6 h-6 text-blue-500" />,
-      highlight: true
+      id: 2,
+      title: "Mapa Territorial",
+      icon: <MapIcon className="w-8 h-8 text-blue-500" />,
+      description: "Visualize sua base e apoiadores geograficamente.",
+      details: "Mapeie bairros, cidades e regiões. Identifique zonas de calor onde sua presença política é mais forte ou precisa de reforço."
     },
     {
-      role: "Deputado Estadual",
-      setup: "R$ 5.000",
-      monthly: "R$ 599",
-      features: ["Atuação multiregional", "Mapeamento de emendas", "Dashboard de prefeitos", "IA estratégica básica"],
-      icon: <BarChart3 className="w-6 h-6 text-purple-500" />
+      id: 3,
+      title: "Gestão de Projetos e Entregas",
+      icon: <FileText className="w-8 h-8 text-purple-500" />,
+      description: "Transforme promessas de campanha em realizações documentadas.",
+      details: "Organize o fluxo de leis, indicações e obras. Tenha provas concretas do seu trabalho para prestar contas à população."
     },
     {
-      role: "Deputado Federal",
-      setup: "R$ 5.000",
-      monthly: "R$ 799",
-      features: ["Gestão nacional", "Monitoramento de bases", "IA avançada", "Relatórios institucionais"],
-      icon: <Globe className="w-6 h-6 text-amber-500" />
+      id: 4,
+      title: "CRM da Base Política",
+      icon: <Users className="w-8 h-8 text-amber-500" />,
+      description: "Gestão profissional de lideranças e apoiadores.",
+      details: "Saiba quem são seus multiplicadores, histórico de contato e demandas específicas de cada liderança local."
     }
   ];
 
-  const marketInsights = [
-    {
-      label: "TAM — Total Addressable Market",
-      sub: "O mercado político total no Brasil",
-      value: "70.000 Agentes",
-      potential: "R$ 280M a R$ 500M/ano",
-      description: "Todos os prefeitos, vices, vereadores e parlamentares estaduais/federais."
-    },
-    {
-      label: "SAM — Serviceable Available Market",
-      sub: "Fatia focada em gestão e inovação",
-      value: "14.000 Potenciais",
-      potential: "R$ 80M a R$ 100M/ano",
-      description: "Mandatos em polos regionais e candidatos estruturados para 2026."
-    },
-    {
-      label: "SOM — Serviceable Obtainable Market",
-      sub: "Meta operacional (24-36 meses)",
-      value: "280 a 560 Ativos",
-      potential: "R$ 1,7M a R$ 3,3M/ano",
-      description: "Penetração inicial realista via parcerias e marketing focado."
-    }
+  const profiles = [
+    { title: "Vereadores", text: "Ideal para organização de base e demandas locais." },
+    { title: "Prefeitos e Vices", text: "Foco total em gestão, indicadores e tomada de decisão." },
+    { title: "Deputados (Est. e Fed.)", text: "Gestão regional/nacional e monitoramento de múltiplas bases." },
+    { title: "Pré-Candidatos", text: "Construção de base sólida e mapeamento territorial antes da eleição." }
   ];
 
-  const pillars = [
-    { id: 1, title: "Base e Território", description: "Visualize sua força política geograficamente.", icon: <MapIcon className="w-8 h-8 text-emerald-500" />, details: ["Mapa do território", "Segmentação da base", "Histórico de demandas", "Lideranças locais"] },
-    { id: 2, title: "Mandato e Gestão", description: "Organize o dia a dia com foco em entregas.", icon: <BarChart3 className="w-8 h-8 text-blue-500" />, details: ["Projetos e leis", "Prioridades estratégicas", "Indicadores de performance", "Acompanhamento de execução"] },
-    { id: 3, title: "Comunicação e Transparência", description: "Transforme dados em narrativas de impacto.", icon: <MessageSquare className="w-8 h-8 text-purple-500" />, details: ["Narrativa baseada em dados", "Relatórios automáticos", "Transparência ativa", "Memória do mandato"] },
-    { id: 4, title: "IA para Decisão", description: "Seu copiloto estratégico 24/7.", icon: <Cpu className="w-8 h-8 text-amber-500" />, details: ["Chat estratégico", "Simulações de impacto", "Análise de sentimentos", "Apoio técnico legislativo"] }
-  ];
-
-  const faqs = [
-    { question: "Isso é legal do ponto de vista eleitoral?", answer: "Sim. A plataforma foca em gestão de mandato e organização administrativa. Os dados são estruturados para apoiar a atividade parlamentar, respeitando a LGPD e as normas de transparência pública." },
-    { question: "Isso é só para quem já tem mandato?", answer: "Não. É ainda mais poderoso para pré-candidatos e aspirantes que desejam entrar no jogo profissionalmente, mapeando território e construindo bases sólidas desde o dia zero." },
-    { question: "É consultoria ou software?", answer: "É uma plataforma SaaS (Software as a Service) com IA integrada. Oferecemos a ferramenta para autonomia da equipe, com módulos opcionais de apoio estratégico." },
-    { question: "Preciso de equipe técnica?", answer: "Absolutamente não. A interface foi desenhada para o uso prático de assessores e do próprio parlamentar, sem curva complexa de aprendizado." }
+  const pricing = [
+    { role: "Vereadores", setup: "R$ 3.000", monthly: "R$ 199", color: "emerald" },
+    { role: "Prefeitos e Vices", setup: "R$ 3.800", monthly: "R$ 399", color: "blue", highlight: true },
+    { role: "Deputado Estadual", setup: "R$ 5.000", monthly: "R$ 599", color: "purple" },
+    { role: "Deputado Federal", setup: "R$ 5.000", monthly: "R$ 799", color: "amber" }
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 overflow-x-hidden">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2">
-              <div className="bg-emerald-600 p-1.5 rounded-lg">
-                <Target className="w-6 h-6 text-white" />
-              </div>
-              <span className="font-bold text-xl tracking-tight text-slate-900">Meu Mandato <span className="text-emerald-600">360º</span></span>
-            </div>
-            <a href="#contato" className="bg-slate-900 text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-slate-800 transition-all shadow-md shadow-slate-200">Falar com Especialista</a>
+    <div className="min-h-screen text-slate-900 overflow-x-hidden">
+      {/* 1. HERO SECTION */}
+      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-40 gradient-bg text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-semibold mb-8">
+            <Target className="w-4 h-4" /> Inteligência para o Mandato
           </div>
-        </div>
-      </nav>
-
-      {/* Hero */}
-      <section className="pt-32 pb-20 lg:pt-48 lg:pb-32 gradient-bg relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-emerald-500/10 blur-[100px] rounded-full translate-x-1/2"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight max-w-4xl mx-auto">
-            Governar bem não é sobre discurso. <br/>
-            <span className="text-emerald-400">É sobre dados, método e decisão.</span>
+          <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight max-w-4xl mx-auto">
+            Governar não é improviso. <br/>
+            <span className="text-emerald-400">É método, dados e estratégia.</span>
           </h1>
-          <p className="text-lg md:text-xl text-slate-300 mb-10 max-w-2xl mx-auto leading-relaxed">
-            A plataforma que organiza seu mandato, sua base e suas decisões — do primeiro voto ao último dia de gestão.
+          <p className="text-lg md:text-xl text-slate-300 mb-10 max-w-3xl mx-auto leading-relaxed">
+            O Meu Mandato 360º organiza dados, base política, projetos e entregas em um único sistema — antes, durante e depois do mandato.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button className="bg-emerald-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-emerald-400 transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20">Quero organizar meu mandato <Rocket className="w-5 h-5" /></button>
-            <button className="bg-white/10 text-white border border-white/20 px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/20 transition-all backdrop-blur-sm">Sou pré-candidato</button>
+            <button className="bg-emerald-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-emerald-400 transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20">
+              Quero organizar meu mandato <Rocket className="w-5 h-5" />
+            </button>
+            <button className="bg-white/10 text-white border border-white/20 px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/20 transition-all backdrop-blur-md">
+              Falar com consultor
+            </button>
           </div>
         </div>
       </section>
 
-      {/* Modelo de Faturamento */}
-      <section id="faturamento" className="py-24 bg-white">
+      {/* 2. THE PROBLEM */}
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 text-xs font-bold uppercase tracking-wider mb-4">
-              <Coins className="w-3 h-3" /> Transparência e Escala
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8 leading-tight">
+                Por que a maioria dos políticos perde o controle do próprio legado?
+              </h2>
+              <div className="space-y-6">
+                {[
+                  "Decisões baseadas em intuição, não em evidências.",
+                  "Bases políticas desorganizadas e dependentes de memória individual.",
+                  "Falta de continuidade entre campanhas e mandatos.",
+                  "Dificuldade imensa de mostrar 'o que foi feito' para o eleitor."
+                ].map((text, i) => (
+                  <div key={i} className="flex gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                    <AlertCircle className="w-6 h-6 text-red-500 shrink-0" />
+                    <p className="text-slate-700 font-medium">{text}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-            <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">Modelo de contratação simples</h3>
-            <p className="text-slate-600 max-w-2xl mx-auto">
-              Sem taxas ocultas. Um investimento estratégico que se paga através da eficiência administrativa e do impacto político gerado.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            {billingModels.map((item, idx) => (
-              <div key={idx} className={`p-6 rounded-3xl border transition-all ${item.highlight ? 'border-emerald-500 ring-4 ring-emerald-500/10 bg-emerald-50/30' : 'border-slate-100 bg-white hover:border-slate-300'}`}>
-                <div className="mb-4">{item.icon}</div>
-                <h4 className="text-xl font-bold text-slate-900 mb-4">{item.role}</h4>
-                <div className="space-y-1 mb-6 pb-6 border-b border-slate-200/60">
-                  <div className="text-sm text-slate-500">Setup: <span className="font-bold text-slate-700">{item.setup}</span></div>
-                  <div className="text-2xl font-extrabold text-slate-900">{item.monthly} <span className="text-xs font-normal text-slate-400">/mês</span></div>
-                </div>
-                <ul className="space-y-3">
-                  {item.features.map((f, fi) => (
-                    <li key={fi} className="flex items-center gap-2 text-xs text-slate-600">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> {f}
-                    </li>
-                  ))}
-                </ul>
+            <div className="relative">
+              <div className="bg-slate-900 rounded-[2.5rem] p-8 shadow-2xl relative z-10">
+                 <BrazilMap />
               </div>
-            ))}
-          </div>
-
-          <div className="bg-slate-900 rounded-3xl p-8 lg:p-12 text-white flex flex-col lg:flex-row items-center justify-between gap-8">
-            <div className="max-w-xl">
-              <h4 className="text-2xl font-bold mb-4">Senadores, Governadores e Executivo</h4>
-              <p className="text-slate-400">Projetos sob medida com módulos avançados de inteligência de dados, integração com sistemas governamentais e apoio estratégico institucional.</p>
-            </div>
-            <button className="bg-white text-slate-900 px-8 py-4 rounded-xl font-bold hover:bg-slate-100 transition-all whitespace-nowrap">Falar com Consultor</button>
-          </div>
-
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-            <div className="p-4"><div className="font-bold text-slate-900">Sem limite de usuários</div><p className="text-xs text-slate-500">Foco total na colaboração da equipe.</p></div>
-            <div className="p-4 border-x border-slate-100"><div className="font-bold text-slate-900">Contrato Recorrente</div><p className="text-xs text-slate-500">Previsibilidade para o seu mandato.</p></div>
-            <div className="p-4"><div className="font-bold text-slate-900">Suporte Político-Técnico</div><p className="text-xs text-slate-500">Equipe que entende a realidade do Brasil.</p></div>
-          </div>
-        </div>
-      </section>
-
-      {/* Tamanho do Mercado (TAM/SAM/SOM) */}
-      <section className="py-24 bg-slate-50 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-emerald-600 font-semibold tracking-wide uppercase mb-2">Visão de Futuro</h2>
-            <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">O Poder do Ecossistema Político Brasileiro</h3>
-            <p className="text-slate-600 max-w-3xl mx-auto">
-              A profissionalização da política não é uma tendência, é uma necessidade. O Meu Mandato 360º está posicionado para liderar a transformação digital das casas legislativas e executivas.
-            </p>
-          </div>
-
-          <div className="grid lg:grid-cols-3 gap-8 mb-20">
-            {marketInsights.map((item, idx) => (
-              <div key={idx} className="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 relative group overflow-hidden">
-                <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-emerald-500/5 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
-                <div className="relative z-10">
-                  <div className="text-xs font-bold text-emerald-600 uppercase mb-2 tracking-widest">{item.label}</div>
-                  <div className="text-sm text-slate-400 mb-6">{item.sub}</div>
-                  <div className="text-3xl font-bold text-slate-900 mb-1">{item.value}</div>
-                  <div className="text-emerald-600 font-bold mb-6">{item.potential}</div>
-                  <p className="text-sm text-slate-500 leading-relaxed border-t border-slate-50 pt-6">{item.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="bg-white rounded-3xl p-8 lg:p-12 shadow-xl border border-slate-100">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <h4 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-                  <TrendingUp className="text-emerald-600" /> Potencial de Escala
-                </h4>
-                <div className="space-y-6">
-                  <div className="flex gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-emerald-100 flex items-center justify-center shrink-0">
-                      <ShieldCheck className="text-emerald-600 w-6 h-6" />
-                    </div>
-                    <div>
-                      <h5 className="font-bold text-slate-900">Baixo Churn Política</h5>
-                      <p className="text-sm text-slate-500">A política é cíclica, mas a necessidade de dados é permanente. Uma vez integrado, o sistema torna-se o sistema nervoso central do mandato.</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-blue-100 flex items-center justify-center shrink-0">
-                      <Rocket className="text-blue-600 w-6 h-6" />
-                    </div>
-                    <div>
-                      <h5 className="font-bold text-slate-900">Expansão de Receita</h5>
-                      <p className="text-sm text-slate-500">Módulos de IA, Advisory e Treinamento de equipes de assessoria aumentam o LTV médio anualmente.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-slate-50 p-8 rounded-2xl border border-slate-200">
-                <div className="text-xs font-bold text-slate-400 uppercase mb-4 tracking-widest">Nota de Sustentabilidade</div>
-                <p className="text-sm text-slate-600 leading-relaxed italic">
-                  "O mercado de GovTech no Brasil amadurece 15% ao ano. Nossa meta é capturar o SOM de forma orgânica e acelerada, tornando-nos o padrão ouro de gestão política no país."
-                </p>
-                <div className="mt-6 pt-6 border-t border-slate-200 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-slate-300"></div>
-                  <div>
-                    <div className="text-sm font-bold text-slate-900">Conselho Estratégico</div>
-                    <div className="text-xs text-slate-500">Meu Mandato 360º</div>
-                  </div>
-                </div>
-              </div>
+              <div className="absolute -top-10 -right-10 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl"></div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* A Solução - Módulos (Antiga) */}
-      <section id="solucao" className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-           <div className="grid md:grid-cols-2 gap-8">
-            {pillars.map((pillar) => (
-              <div key={pillar.id} className="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:shadow-lg transition-all group">
-                <div className="flex items-start gap-6">
-                  <div className="p-4 bg-white rounded-2xl group-hover:scale-110 transition-transform shadow-sm">
-                    {pillar.icon}
-                  </div>
-                  <div>
-                    <h4 className="text-2xl font-bold mb-2 text-slate-900">{pillar.title}</h4>
-                    <p className="text-slate-500 mb-6">{pillar.description}</p>
-                    <ul className="grid grid-cols-2 gap-x-4 gap-y-2">
-                      {pillar.details.map((detail, dIdx) => (
-                        <li key={dIdx} className="flex items-center gap-2 text-sm text-slate-700 font-medium">
-                          <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-                          {detail}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
+      {/* 3. THE SOLUTION */}
+      <section className="py-24 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-emerald-600 font-bold uppercase tracking-widest text-sm mb-4">A Revolução Digital</h2>
+          <h3 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-12">
+            O Sistema Operacional do Mandato Moderno
+          </h3>
+          <p className="text-lg text-slate-600 max-w-3xl mx-auto mb-16">
+            O Meu Mandato 360º não é apenas um software. É uma metodologia de governança baseada em dados que profissionaliza cada ação da sua equipe.
+          </p>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="p-8 bg-white rounded-3xl border border-slate-200 shadow-sm">
+              <div className="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                <BarChart3 className="text-emerald-600 w-8 h-8" />
               </div>
-            ))}
+              <h4 className="text-xl font-bold mb-4">Governança por Dados</h4>
+              <p className="text-slate-500 text-sm">Pare de chutar. Use indicadores reais para priorizar onde sua equipe deve atuar amanhã.</p>
+            </div>
+            <div className="p-8 bg-white rounded-3xl border border-slate-200 shadow-sm">
+              <div className="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                <Users className="text-blue-600 w-8 h-8" />
+              </div>
+              <h4 className="text-xl font-bold mb-4">Gestão de Base Profissional</h4>
+              <p className="text-slate-500 text-sm">Mantenha o histórico completo de cada liderança e apoiador. O mandato não se perde em planilhas.</p>
+            </div>
+            <div className="p-8 bg-white rounded-3xl border border-slate-200 shadow-sm">
+              <div className="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                <Cpu className="text-purple-600 w-8 h-8" />
+              </div>
+              <h4 className="text-xl font-bold mb-4">IA Estratégica</h4>
+              <p className="text-slate-500 text-sm">Nosso copiloto de inteligência ajuda a analisar sentimentos e gerar relatórios de impacto automaticamente.</p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="py-24 bg-white border-t border-slate-100">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 4. CORE MODULES */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-blue-600 font-semibold tracking-wide uppercase mb-2">Dúvidas?</h2>
-            <h3 className="text-3xl font-bold text-slate-900">Perguntas Frequentes</h3>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Módulos que Transformam seu Dia a Dia</h2>
+            <p className="text-slate-500">Clique nos cards para explorar as funcionalidades</p>
           </div>
-          <div className="space-y-4">
-            {faqs.map((faq, idx) => (
-              <div key={idx} className="border border-slate-200 rounded-2xl overflow-hidden">
-                <button 
-                  className="w-full p-6 text-left flex justify-between items-center hover:bg-slate-50 transition-colors"
-                  onClick={() => setActiveFAQ(activeFAQ === idx ? null : idx)}
-                >
-                  <span className="font-bold text-slate-900">{faq.question}</span>
-                  <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform ${activeFAQ === idx ? 'rotate-180' : ''}`} />
-                </button>
-                {activeFAQ === idx && (
-                  <div className="p-6 pt-0 text-slate-600 text-sm leading-relaxed border-t border-slate-100 bg-slate-50/50">
-                    {faq.answer}
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {modules.map((m) => (
+              <div 
+                key={m.id}
+                onClick={() => setActiveModule(activeModule === m.id ? null : m.id)}
+                className={`module-card p-8 rounded-3xl border cursor-pointer ${activeModule === m.id ? 'border-emerald-500 bg-emerald-50/30' : 'border-slate-100 bg-slate-50'}`}
+              >
+                <div className="mb-6">{m.icon}</div>
+                <h4 className="text-xl font-bold mb-4 text-slate-900">{m.title}</h4>
+                <p className="text-slate-500 text-sm mb-4">{m.description}</p>
+                {activeModule === m.id && (
+                  <div className="pt-4 border-t border-emerald-200 text-xs text-emerald-800 leading-relaxed animate-in fade-in slide-in-from-top-2">
+                    {m.details}
                   </div>
                 )}
+                <div className="mt-4 flex items-center text-xs font-bold text-slate-400">
+                  {activeModule === m.id ? 'Fechar detalhes' : 'Ver mais detalhes'}
+                  <ChevronRight className={`w-4 h-4 transition-transform ${activeModule === m.id ? 'rotate-90' : ''}`} />
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Final */}
-      <section id="contato" className="py-24 gradient-bg relative overflow-hidden text-white text-center">
-        <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <h2 className="text-3xl md:text-5xl font-extrabold mb-8 leading-tight">
-            Mandatos passam. <br/>
-            <span className="text-emerald-400">Dados, método e legado ficam.</span>
-          </h2>
-          <p className="text-xl text-slate-300 mb-12 max-w-2xl mx-auto">
-            Não deixe o futuro do seu mandato ao acaso. Profissionalize sua gestão agora.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-6">
-            <button className="bg-emerald-500 text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-emerald-400 transition-all shadow-xl shadow-emerald-500/20">Quero a plataforma</button>
-            <button className="bg-white/10 text-white border border-white/20 px-10 py-5 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all backdrop-blur-md">Falar com Consultor</button>
+      {/* 5. WHO IS IT FOR */}
+      <section className="py-24 bg-slate-900 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold mb-16">Desenhado para todo o espectro político</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {profiles.map((p, i) => (
+              <div key={i} className="p-8 glass-card rounded-3xl">
+                <CheckCircle2 className="w-8 h-8 text-emerald-400 mb-6 mx-auto" />
+                <h4 className="text-xl font-bold mb-2">{p.title}</h4>
+                <p className="text-slate-400 text-sm">{p.text}</p>
+              </div>
+            ))}
           </div>
-          <p className="mt-12 text-sm text-slate-500 italic">© 2024 Meu Mandato 360º. Todos os direitos reservados.</p>
         </div>
       </section>
+
+      {/* 6. BILLING MODEL */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold mb-4">💰 Modelo de contratação simples</h2>
+            <p className="text-slate-500">Sem taxas ocultas. Investimento claro para implantação e acompanhamento.</p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {pricing.map((p, i) => (
+              <div key={i} className={`p-8 rounded-3xl border ${p.highlight ? 'border-emerald-500 bg-emerald-50/30 ring-4 ring-emerald-500/10' : 'border-slate-100 bg-white shadow-sm'}`}>
+                <h4 className="text-xl font-bold text-slate-900 mb-4">{p.role}</h4>
+                <div className="space-y-2 mb-8">
+                  <div className="text-xs text-slate-500 uppercase tracking-widest font-bold">Setup Único</div>
+                  <div className="text-2xl font-black text-slate-900">{p.setup}</div>
+                  <div className="h-px bg-slate-100"></div>
+                  <div className="text-xs text-slate-500 uppercase tracking-widest font-bold">Assinatura Mensal</div>
+                  <div className="text-3xl font-black text-emerald-600">{p.monthly}</div>
+                </div>
+                <button className={`w-full py-3 rounded-xl font-bold text-sm transition-all ${p.highlight ? 'bg-emerald-500 text-white hover:bg-emerald-600' : 'bg-slate-900 text-white hover:bg-slate-800'}`}>
+                  Selecionar
+                </button>
+              </div>
+            ))}
+          </div>
+          <div className="mt-12 text-center text-xs text-slate-400">
+            *Sem taxa de licenciamento por usuário | Sem dependência de equipe técnica externa | Contrato recorrente e transparente.
+          </div>
+        </div>
+      </section>
+
+      {/* 7. MARKET VISION */}
+      <section className="py-24 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-[3rem] p-12 lg:p-20 shadow-xl border border-slate-200">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">Tração e Impacto</h2>
+              <p className="text-slate-600 max-w-2xl mx-auto">Nosso mercado não é apenas financeiro, é o tamanho da transformação da democracia brasileira.</p>
+            </div>
+            <div className="grid lg:grid-cols-3 gap-12">
+              <div className="text-center">
+                <div className="text-xs font-bold text-slate-400 uppercase mb-4 tracking-widest">TAM — Total Market</div>
+                <div className="text-4xl font-black text-slate-900 mb-2">~70.000</div>
+                <div className="text-sm font-bold text-emerald-600 mb-4">Agentes Políticos Eletivos</div>
+                <p className="text-xs text-slate-500">Todos os cargos eletivos do país em todas as esferas.</p>
+              </div>
+              <div className="text-center border-y lg:border-y-0 lg:border-x border-slate-100 py-12 lg:py-0">
+                <div className="text-xs font-bold text-slate-400 uppercase mb-4 tracking-widest">SAM — Serviceable Market</div>
+                <div className="text-4xl font-black text-slate-900 mb-2">~14.000</div>
+                <div className="text-sm font-bold text-emerald-600 mb-4">Potenciais Clientes</div>
+                <p className="text-xs text-slate-500">Focado em mandatos com perfil de gestão inovadora e capitais.</p>
+              </div>
+              <div className="text-center">
+                <div className="text-xs font-bold text-slate-400 uppercase mb-4 tracking-widest">SOM — Tração Operacional</div>
+                <div className="text-4xl font-black text-slate-900 mb-2">280 a 560</div>
+                <div className="text-sm font-bold text-emerald-600 mb-4">Clientes Ativos (24-36 meses)</div>
+                <p className="text-xs text-slate-500">Cenário pé no chão para escala sustentável do produto.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA FINAL */}
+      <section className="py-24 gradient-bg text-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-5xl font-bold mb-8">Mandatos passam. <br/><span className="text-emerald-400">Dados, método e legado ficam.</span></h2>
+          <p className="text-lg text-slate-400 mb-12">Profissionalize sua gestão política hoje mesmo com o Meu Mandato 360º.</p>
+          <button className="bg-emerald-500 text-white px-12 py-6 rounded-2xl font-bold text-xl hover:bg-emerald-400 transition-all shadow-2xl shadow-emerald-500/20">
+            Agendar Demonstração Agora
+          </button>
+        </div>
+      </section>
+
+      <footer className="py-12 bg-slate-950 text-slate-500 text-center text-sm border-t border-white/5">
+        © 2024 Meu Mandato 360º. Todos os direitos reservados.
+      </footer>
     </div>
   );
 };
